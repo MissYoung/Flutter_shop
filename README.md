@@ -1,8 +1,21 @@
-# zdk_app
+# 全网最全flutter 学习案例 仿闲鱼（开源版）
 
-A new Flutter application.
+MIT协议 最终现实效果和闲鱼一致 可直接二次开发上线使用（欢迎Star）
 
-## Getting Started
+# 常用组件使用
+> * 上拉加载，下拉刷新（原生实现）
+> * 响应式瀑布流（第三方组件 flutter_staggered_grid_view）
+> * 自动图片缓存与异步加载（第三方组件 cached_network_image）
+> * 滑动头部，贴附头部（原生实现）
+> * 图片预览（第三方组件 photo_view+封装实现）
+> * 图片视频拍摄选择（第三方组件 image_picker）
+> * 视频播放（第三方组件 video_player+封装实现）
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+# 功能实现
+- [x] ui
+- [x] 推送显示
+- [ ] 微信支付集成
+- [ ] 支付宝支付集成
+- [ ] 推送集成
+
+# 本人QQ：10274004
