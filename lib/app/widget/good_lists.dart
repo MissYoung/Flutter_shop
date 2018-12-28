@@ -78,7 +78,7 @@ void _getMoretEvent( ) {
       // 添加数据，更新界面
         setState(() {
         print(_itemCount);
-          if(_itemCount>=50){
+          if(_itemCount>=18){
             loadState= 2; // 没有了
             return;// 终止
           }

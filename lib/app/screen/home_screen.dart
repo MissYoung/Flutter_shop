@@ -13,6 +13,7 @@ class GoodsTab {
   //商品列表 tab包装 类
   String text;
   GoodList goodList;
+
   GoodsTab(this.text, this.goodList);
 }
 
@@ -21,115 +22,59 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   bool get wantKeepAlive => true; // 保持底部切换状态不变
 
-  Widget _widget_menu_card() {
-    return new Container(
-      padding: EdgeInsets.symmetric(horizontal: 8),
-    child: new Card(
-      //color: GlobalConfig.cardBackgroundColor,
-      child:  new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          new Container(
-            child: new FlatButton(
-                onPressed: (){},
-                child: new Container(
-                  padding: EdgeInsets.all(8),
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          child: new Icon(Icons.invert_colors, color: Colors.white),
-                          backgroundColor: new Color(0xFFB88800),
-                        ),
-                      ),
-                      new Container(
-                        child: new Text("菜单", style: new TextStyle( fontSize: 14.0)),
-                      )
-                    ],
-                  ),
-                )
-            ),
-          ),
-          new Container(
-            child: new FlatButton(
-                onPressed: (){},
-                child: new Container(
-                  padding: EdgeInsets.all(8),
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          child: new Icon(Icons.golf_course, color: Colors.white),
-                          backgroundColor: new Color(0xFF63616D),
-                        ),
-                      ),
-                      new Container(
-                        child: new Text("菜单2", style: new TextStyle( fontSize: 14.0)),
-                      )
-                    ],
-                  ),
-                )
-            ),
-          ),
-          new Container(
-            child: new FlatButton(
-                onPressed: (){
-                  setState((){
+  List _data_menus = [
+    {'title': '菜单1', 'img': ""},
+    {'title': '菜单2', 'img': ""},
+    {'title': '菜单3', 'img': ""},
+    {'title': '菜单4', 'img': ""},
+    {'title': '菜单5', 'img': ""},
+    {'title': '菜单6', 'img': ""},
+    {'title': '菜单7', 'img': ""},
+    {'title': '全部', 'img': ""}
+  ];
 
-                  });
-                },
-                child: new Container(
-                  padding: EdgeInsets.all(8),
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          child: new Icon( Icons.wb_sunny, color: Colors.white),
-                          backgroundColor: new Color(0xFFB86A0D),
-                        ),
-                      ),
-                      new Container(
-                        child: new Text("菜单3", style: new TextStyle(fontSize: 14.0)),
-                      )
-                    ],
+ Key _key_widget_menu_card = Key("_key_widget_menu_card");
+
+  Widget _widget_menu_item(Map v) { // 菜单 item
+    return Container( // 可配置整个元素样式
+      width: MediaQuery.of(context).size.width/4-4, // -4 是card 默认的
+        child: new FlatButton(
+            onPressed: () {},
+            child: new Container( // 可配置 图标样式
+              padding: EdgeInsets.all(8),
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    margin: const EdgeInsets.only(bottom: 6.0),
+                    child: new CircleAvatar(
+                      radius: 20.0,
+                      child: new Icon(Icons.invert_colors, color: Colors.white),
+                      backgroundColor: new Color(0xFFB88800),
+                    ),
                   ),
-                )
-            ),
-          ),
-          new Container(
-            child: new FlatButton(
-                onPressed: (){},
-                child: new Container(
-                  padding: EdgeInsets.all(8),
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          child: new Icon(Icons.category, color: Colors.white),
-                          backgroundColor: Colors.deepOrange,
-                        ),
-                      ),
-                      new Container(
-                        child: new Text("全部分类", style: new TextStyle(fontSize: 14.0)),
-                      )
-                    ],
-                  ),
-                )
-            ),
-          ),
-        ],
-      ),
-      )
+                  new Container(// 可配置 文字样式
+                    child: new Text(v["title"], style: new TextStyle(fontSize: 14.0)),
+                  )
+                ],
+              ),
+            )
+        )
     );
   }
+
+  Widget _widget_menu_card() {
+    return new SliverToBoxAdapter(
+        child: Card(
+          child: new Wrap(
+              alignment: WrapAlignment.center,
+              children: _data_menus.map<Widget>((v){
+                return _widget_menu_item(v);
+              }).toList(),
+          ),
+        )
+    );
+  }
+
   Widget _widget_barSearch() {
     return new Container(
         child: new Row(
@@ -183,20 +128,16 @@ class _HomeScreenState extends State<HomeScreen>
           title: _widget_barSearch(),
         ),
         body: NestedScrollView(
-            headerSliverBuilder: (BuildContext context,
-                bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverToBoxAdapter(
-                  child: _widget_menu_card(),
-                ),
-                SliverToBoxAdapter(
-                  child: _widget_menu_card(),
-                ),
+          headerSliverBuilder: (BuildContext context,
+              bool innerBoxIsScrolled) {
+            return <Widget>[
+              _widget_menu_card(),
               SliverOverlapAbsorber(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              child: SliverAppBar(
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                      context),
+                  child: SliverAppBar(
                     //primary: true,
-                   // backgroundColor: Colors.transparent,
+                    // backgroundColor: Colors.transparent,
                     pinned: true, // 是否固定头部导航栏
                     forceElevated: innerBoxIsScrolled,
                     title: TabBar(
@@ -208,15 +149,15 @@ class _HomeScreenState extends State<HomeScreen>
                       }).toList(),
                     ),
                   )),
-              ];
-            },
-            body: TabBarView(
-              children: myTabs.map((item) {
-                return item.goodList;
-              }).toList(),
-              ),
+            ];
+          },
+          body: TabBarView(
+            children: myTabs.map((item) {
+              return item.goodList;
+            }).toList(),
+          ),
         )
-      ,
-    ),);
+        ,
+      ),);
   }
 }
